@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+ <h1> Logooo ja
+ </h1>
+
+ <pre>
+
+    package ba.edu.ibu.stu.chern0.harismuhibic;
+
+    import android.content.Context;
+    import android.content.Intent;
+    import android.content.SharedPreferences;
+    import android.support.v7.app.AppCompatActivity;
+    import android.os.Bundle;
+    import android.view.View;
+    import android.widget.EditText;
+    import android.widget.Toast;
+    
+    public class LoginActivity extends AppCompatActivity {
+    
+        SharedPreferences shared;
+        private EditText user, pass;
+        private Intent intent;
+    
+        public LoginActivity() {
+        }
+    
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_login);
+    
+            user = findViewById(R.id.usernameLogin);
+            pass = findViewById(R.id.passwordLogin);
+    
+            shared = this.getSharedPreferences("ba.edu.ibu.stu.chern0.harismuhibic", Context.MODE_PRIVATE);
+    
+        }
+    
+        public void login(View v) {
+            if(validateUser(user.getText().toString(), pass.getText().toString())) {
+                intent = new Intent(this, MapActivity.class);
+                startActivity(intent);
+            }
+        }
+    
+        public boolean validateUser(String username, String password) {
+            if(username.equals("") || password.equals("")) {
+                Toast.makeText(this, "Please fill all fields, no empty ones!", Toast.LENGTH_SHORT).show();
+            }
+    
+            if(username.equals(shared.getString("username", ""))) {
+                if(password.equals(shared.getString("password", ""))) {
+                    Toast.makeText(this, "Successfully logged in!", Toast.LENGTH_SHORT).show();
+                    return true;
+                } else {
+                    Toast.makeText(this, "Password is not correct for this username", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(this, "The username does not exist", Toast.LENGTH_SHORT).show();
+            }
+    
+            return false;
+        }
+    }
+    
+
+ </pre>
+
+</body>
+</html>
